@@ -1,0 +1,28 @@
+<div class="local-studenthub">
+    <nav aria-label="{{#str}}pluginname, local_studenthub{{/str}}" class="mb-4">
+        <ul class="nav nav-pills gap-2">
+            {{#tabs}}
+                <li class="nav-item">
+                    <a class="nav-link py-2 {{#active}}active{{/active}}" href="{{url}}" {{#active}}aria-current="page"{{/active}}>{{label}}</a>
+                </li>
+            {{/tabs}}
+        </ul>
+    </nav>
+    <h2>{{title}}</h2>
+    {{#intro}}<p class="text-body-secondary">{{intro}}</p>{{/intro}}
+    {{#empty}}<p class="border rounded bg-body-tertiary p-3">{{emptytext}}</p>{{/empty}}
+    {{#gradeshtml}}<div class="table-responsive" tabindex="0" role="region" aria-label="{{title}}">{{{gradeshtml}}}</div>{{/gradeshtml}}
+    {{#entries}}
+        <article class="card mb-3">
+            <div class="card-body d-flex flex-column gap-2">
+                {{#module}}<span class="small text-body-secondary">{{module}}</span>{{/module}}
+                <h3 class="h5 mb-0"><a href="{{url}}">{{{name}}}</a></h3>
+                {{#detail}}<div>{{detail}}</div>{{/detail}}
+                {{#date}}<div class="small text-body-secondary">{{date}}</div>{{/date}}
+                {{#recent}}
+                    <div><a href="{{url}}">{{{title}}}</a> <span class="small text-body-secondary">{{date}}</span></div>
+                {{/recent}}
+            </div>
+        </article>
+    {{/entries}}
+</div>
