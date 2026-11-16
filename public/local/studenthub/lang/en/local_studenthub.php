@@ -1,6 +1,29 @@
 <?php
 defined('MOODLE_INTERNAL') || die();
 
+$string['assessment'] = 'Assessment';
+$string['noticetype'] = 'Notice type';
+$string['cancelassessment'] = 'Cancel assessment';
+$string['rescheduleassessment'] = 'Change assessment time';
+$string['newassessmenttime'] = 'New date and time';
+$string['notemessage'] = 'Message for students (optional)';
+$string['publishnotice'] = 'Publish notice';
+$string['invalidnotice'] = 'Select a valid assessment and notice type.';
+$string['sameassessmenttime'] = 'Choose a different date and time.';
+$string['noticecancel'] = 'Cancelled: {$a}';
+$string['noticereschedule'] = 'Rescheduled: {$a}';
+$string['managenotices'] = 'Assessment notices';
+$string['publishdisclosure'] = 'The notice goes to everyone enrolled in this course. Update the assessment settings separately to change its availability or dates.';
+$string['newtimerequired'] = 'Enable the new date and time and choose a value.';
+$string['noticeremoved'] = 'Notice removed.';
+$string['noticepublished'] = 'Notice published.';
+$string['noassessmentsfornotice'] = 'Add a quiz or assignment before publishing a notice.';
+$string['activenotices'] = 'Published notices';
+$string['removenotice'] = 'Remove notice';
+$string['previousdate'] = 'Previous: {$a}';
+$string['nextdate'] = 'New: {$a}';
+$string['viewcoursenotices'] = 'View course notices';
+
 $string['pluginname'] = 'Student hub';
 $string['materials'] = 'Lectures';
 $string['assessments'] = 'Assessments';

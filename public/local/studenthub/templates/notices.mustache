@@ -1,0 +1,20 @@
+{{#courses}}
+    <template data-studenthub-notice="{{courseid}}" {{#incourse}}data-incourse{{/incourse}}>
+        <div class="local-studenthub-notices {{^incourse}}mx-2{{/incourse}}" {{#incourse}}id="local-studenthub-course-notices"{{/incourse}}>
+            {{#notices}}
+                <div class="alert alert-warning mb-2">
+                    <strong>{{title}}</strong>
+                    {{#newtime}}
+                        <div>{{#str}} previousdate, local_studenthub, {{oldtime}} {{/str}}</div>
+                        <div>{{#str}} nextdate, local_studenthub, {{newtime}} {{/str}}</div>
+                    {{/newtime}}
+                    {{#note}}<div class="text-break">{{note}}</div>{{/note}}
+                    {{#more}}<a href="{{more}}">{{#str}} viewcoursenotices, local_studenthub {{/str}}</a>{{/more}}
+                </div>
+            {{/notices}}
+            {{#manage}}
+                <a class="btn btn-outline-secondary mb-3" href="{{manage}}">{{#str}} managenotices, local_studenthub {{/str}}</a>
+            {{/manage}}
+        </div>
+    </template>
+{{/courses}}
