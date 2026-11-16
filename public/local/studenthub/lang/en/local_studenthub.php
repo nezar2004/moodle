@@ -13,7 +13,8 @@ $string['sameassessmenttime'] = 'Choose a different date and time.';
 $string['noticecancel'] = 'Cancelled: {$a}';
 $string['noticereschedule'] = 'Rescheduled: {$a}';
 $string['managenotices'] = 'Assessment notices';
-$string['publishdisclosure'] = 'The notice goes to everyone enrolled in this course. Update the assessment settings separately to change its availability or dates.';
+$string['publishdisclosure'] = 'The notice appears for everyone enrolled in this course. For a reschedule, update the activity dates in its settings too.';
+$string['cancelhelp'] = 'Publishing a cancellation notice hides the assessment from students. You can show it again in the course.';
 $string['newtimerequired'] = 'Enable the new date and time and choose a value.';
 $string['noticeremoved'] = 'Notice removed.';
 $string['noticepublished'] = 'Notice published.';
@@ -22,7 +23,6 @@ $string['activenotices'] = 'Published notices';
 $string['removenotice'] = 'Remove notice';
 $string['previousdate'] = 'Previous: {$a}';
 $string['nextdate'] = 'New: {$a}';
-$string['viewcoursenotices'] = 'View course notices';
 
 $string['pluginname'] = 'Student hub';
 $string['materials'] = 'Lectures';

@@ -5,7 +5,8 @@ use cm_info;
 use context_course;
 use core\event\course_deleted;
 use core\event\course_module_deleted;
-use moodle_url;
+use core\event\course_module_updated;
+use core_courseformat\formatactions;
 use stdClass;
 
 /** Course-wide assessment notices explicitly published by editing teachers. */
@@ -33,13 +34,16 @@ final class notices {
         return (int) ($quiz->timeopen ?: $quiz->timeclose);
     }
 
-    /** Save a notice, replacing the previous one for this assessment. */
+    /** Hide a cancelled assessment and publish its notice as one operation. */
     public static function publish(stdClass $course, int $cmid, string $kind, int $newtime, string $note): void {
         global $DB;
         require_capability('moodle/course:manageactivities', context_course::instance($course->id));
         $cm = self::activities($course)[$cmid] ?? null;
         if (!$cm || !in_array($kind, self::KINDS, true) || ($kind === 'reschedule' && $newtime <= 0)) {
             throw new \moodle_exception('invalidnotice', 'local_studenthub');
+        }
+        if ($kind === 'cancel') {
+            require_capability('moodle/course:activityvisibility', $cm->context);
         }
 
         $factory = \core\lock\lock_config::get_lock_factory('local_studenthub_notice');
@@ -67,11 +71,31 @@ final class notices {
                 'note' => \core_text::substr(trim($note), 0, 250),
                 'timemodified' => time(),
             ];
-            if ($existing) {
-                $record->id = $existing->id;
-                $DB->update_record(self::TABLE, $record);
-            } else {
-                $DB->insert_record(self::TABLE, $record);
+            $transaction = $DB->start_delegated_transaction();
+            try {
+                if ($kind === 'cancel') {
+                    $activity = $DB->get_record('course_modules', ['id' => $cmid, 'course' => $course->id], '*', MUST_EXIST);
+                    if ($activity->deletioninprogress
+                            || !formatactions::cm($course->id)->set_visibility($cmid, 0, (int) $activity->visibleoncoursepage, false)) {
+                        throw new \moodle_exception('invalidnotice', 'local_studenthub');
+                    }
+                    if ($activity->visible) {
+                        course_module_updated::create_from_cm($cm, $cm->context)->trigger();
+                    }
+                }
+                if ($existing) {
+                    $record->id = $existing->id;
+                    $DB->update_record(self::TABLE, $record);
+                } else {
+                    $DB->insert_record(self::TABLE, $record);
+                }
+                $transaction->allow_commit();
+            } catch (\Throwable $error) {
+                $transaction->rollback($error);
+            }
+            if ($kind === 'cancel') {
+                \course_modinfo::purge_course_module_cache($course->id, $cmid);
+                rebuild_course_cache($course->id, false, true);
             }
         } finally {
             $lock->release();
@@ -79,7 +103,7 @@ final class notices {
     }
 
     /** Current notices, newest first, for courses already authorized by the caller. */
-    public static function for_courses(array $courses): array {
+    public static function for_courses(array $courses, bool $includeinactive = false): array {
         global $DB;
         if (!$courses) {
             return [];
@@ -90,7 +114,7 @@ final class notices {
         foreach ($records as $record) {
             $modinfo = get_fast_modinfo($record->courseid);
             $cm = $modinfo->get_cms()[$record->cmid] ?? null;
-            if (!$cm || $cm->deletioninprogress) {
+            if (!$cm || $cm->deletioninprogress || (!$includeinactive && $record->kind === 'cancel' && $cm->visible)) {
                 continue;
             }
             $name = \core_text::entities_to_utf8(format_string($cm->name, true, ['context' => $cm->context]));

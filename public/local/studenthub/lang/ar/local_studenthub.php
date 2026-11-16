@@ -13,7 +13,8 @@ $string['sameassessmenttime'] = 'اختار موعد مختلف.';
 $string['noticecancel'] = 'أُلغي: {$a}';
 $string['noticereschedule'] = 'تغيّر موعد: {$a}';
 $string['managenotices'] = 'تنبيهات التقييم';
-$string['publishdisclosure'] = 'التنبيه بيظهر لكل الطلاب المسجلين بالمادة. لتغيير موعد التقييم الفعلي أو إتاحته، عدّل إعدادات التقييم.';
+$string['publishdisclosure'] = 'التنبيه بيظهر لكل الطلاب المسجلين بالمادة. إذا غيّرت الموعد، عدّل التاريخ كمان بإعدادات التقييم.';
+$string['cancelhelp'] = 'نشر تنبيه الإلغاء بخفي التقييم عن الطلاب. بتقدر ترجع تظهره من صفحة المادة.';
 $string['newtimerequired'] = 'فعّل خانة الموعد الجديد وحدّد التاريخ والوقت.';
 $string['noticeremoved'] = 'انشال التنبيه.';
 $string['noticepublished'] = 'اننشر التنبيه.';
@@ -22,7 +23,6 @@ $string['activenotices'] = 'التنبيهات المنشورة';
 $string['removenotice'] = 'احذف التنبيه';
 $string['previousdate'] = 'الموعد القديم: {$a}';
 $string['nextdate'] = 'الموعد الجديد: {$a}';
-$string['viewcoursenotices'] = 'شوف تنبيهات المادة';
 
 $string['pluginname'] = 'مركز الطالب';
 $string['materials'] = 'المحاضرات';

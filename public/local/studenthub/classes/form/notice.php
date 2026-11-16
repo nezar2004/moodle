@@ -20,6 +20,8 @@ final class notice extends \moodleform {
             'cancel' => get_string('cancelassessment', 'local_studenthub'),
             'reschedule' => get_string('rescheduleassessment', 'local_studenthub'),
         ]);
+        $form->addElement('static', 'cancelhelp', '', get_string('cancelhelp', 'local_studenthub'));
+        $form->hideIf('cancelhelp', 'kind', 'neq', 'cancel');
         $form->addElement('date_time_selector', 'newtime', get_string('newassessmenttime', 'local_studenthub'), ['optional' => true]);
         $form->hideIf('newtime', 'kind', 'neq', 'reschedule');
         $form->addElement('textarea', 'note', get_string('notemessage', 'local_studenthub'), ['rows' => 3, 'maxlength' => 250]);

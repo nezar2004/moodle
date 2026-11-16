@@ -14,7 +14,7 @@ final class notice_output {
             return;
         }
         $cards = $PAGE->pagelayout === 'mycourses';
-        $incourse = str_starts_with($PAGE->pagetype, 'course-view-') || $PAGE->pagetype === 'local-studenthub-view';
+        $incourse = str_starts_with($PAGE->pagetype, 'course-view-');
         if (!$cards && !$incourse) {
             return;
         }

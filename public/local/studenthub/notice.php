@@ -43,7 +43,7 @@ if ($activities) {
 } else {
     echo $OUTPUT->notification(get_string('noassessmentsfornotice', 'local_studenthub'), \core\output\notification::NOTIFY_INFO, false);
 }
-$active = notices::for_courses([$course])[$course->id] ?? [];
+$active = notices::for_courses([$course], true)[$course->id] ?? [];
 if ($active) {
     echo $OUTPUT->heading(get_string('activenotices', 'local_studenthub'), 3);
     foreach ($active as $notice) {
